@@ -1,8 +1,15 @@
 const rl = @import("raylib");
+const std = @import("std");
 
 pub const TetrominoType = enum {
     I, O, T, S, Z, J, L,
 };
+
+pub const TetrominoArray = [_] Tetromino{ I, O, T, S, Z, J, L };
+
+pub fn getRandomTetromino(rand: std.Random) Tetromino {
+    return TetrominoArray[@intCast(rand.intRangeAtMost(u32, 0, 6))];
+}
 
 pub const Tetromino = struct {
     blockType: TetrominoType,
@@ -16,6 +23,13 @@ pub const Tetromino = struct {
         self.rotation += 1;
         if (self.rotation > 3) {
             self.rotation = 0;
+        }
+    }
+
+    pub fn undoRotation(self: *Tetromino) void {
+        self.rotation -= 1;
+        if (self.rotation < 0) {
+            self.rotation = 3;
         }
     }
 

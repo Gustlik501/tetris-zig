@@ -50,6 +50,14 @@ pub const Grid = struct {
             }
         }
     }
+    
+
+    pub fn isCellOutOfBounds(self: *const Grid, x: i32, y: i32) bool {
+        if (x < 0 or x >= self.num_cols or y < 0 or y >= self.num_rows) {
+            return true;
+        }
+        return false;
+    }
 
 };
 
